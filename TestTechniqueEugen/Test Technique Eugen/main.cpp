@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 #include <vector>
+#include "Data.hpp"
 
 
 //Split a string into a vector of strings
@@ -18,19 +20,35 @@ std::vector<std::string> split(const std::string& str, const std::string& regex)
     return vec;
 }
 
+
+//Create a vector of data holding all the numbers from the input
+std::vector<Data> getPositions(std::vector<std::string>& vec)
+{
+    std::vector<Data> vecData;
+    std::string temp;
+    std::vector<std::string> tempVec;
+    int x = 0;
+    int y = 0;
+    for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
+    {
+        temp = *it;
+        temp.substr(1, temp.size - 3); // Getting only the numbers and their separator
+        tempVec = split(temp, ";"); // Separating the numbers into two separate strings
+        x = std::stoi(tempVec[0]); // Get the first number as an int
+        y = std::stoi(tempVec[1]); // Get the second number as an int
+        Data data(x, y); // Create a Data variable using the two numbers
+        vecData.emplace_back(data);
+    }
+    return (vecData);
+}
+
 int main(int argc, char** argv)
 {
     if (argc >= 2)
     {
         std::string str = argv[1];
         std::vector<std::string> vec = split(str, " ");
-        std::vector<std::string>::iterator it;
-        for (it = vec.begin(); it != vec.end(); ++it)
-        {
-            std::cout << *it << " ";
-            it = vec.end() - 1;
-            std::cout << *it;
-        }
+        std::vector<Data> vecData = getPositions(vec);
     }
 	return (0);
 }
