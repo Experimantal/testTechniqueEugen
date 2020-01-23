@@ -32,7 +32,7 @@ std::vector<Data> getPositions(std::vector<std::string>& vec)
     for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it)
     {
         temp = *it;
-        temp.substr(1, temp.size - 3); // Getting only the numbers and their separator
+        temp = temp.substr(1, temp.size() - 2); // Getting only the numbers and their separator
         tempVec = split(temp, ";"); // Separating the numbers into two separate strings
         x = std::stoi(tempVec[0]); // Get the first number as an int
         y = std::stoi(tempVec[1]); // Get the second number as an int
@@ -49,6 +49,20 @@ int main(int argc, char** argv)
         std::string str = argv[1];
         std::vector<std::string> vec = split(str, " ");
         std::vector<Data> vecData = getPositions(vec);
+        std::cout << "(" << vecData[0].getX() << ";" << vecData[0].getY() << ")";
+        std::vector<Data>::iterator it = vecData.begin() + 1;
+        while (it != vecData.end())
+        {
+            if (it + 1 != vecData.end())
+            {
+                std::vector<Data>::iterator temp = it + 1;
+                if (it->getX() > temp->getX() || it->getY() > temp->getY())
+                    std::cout << " " << "(" << it->getX() << ";" << it->getY() << ")";
+            }
+            else
+                std::cout << " " << "(" << it->getX() << ";" << it->getY() << ")";
+            ++it;
+        }
     }
 	return (0);
 }
