@@ -55,8 +55,10 @@ int main(int argc, char** argv)
         {
             if (it + 1 != vecData.end())
             {
-                std::vector<Data>::iterator temp = it + 1;
-                if (it->getX() > temp->getX() || it->getY() > temp->getY())
+                std::vector<Data>::iterator next = it + 1;
+                if (it->getY() != next->getY())
+                    std::cout << " " << "(" << it->getX() << ";" << it->getY() << ")";
+                else if (it->getY() > (it - 1)->getY())
                     std::cout << " " << "(" << it->getX() << ";" << it->getY() << ")";
             }
             else
